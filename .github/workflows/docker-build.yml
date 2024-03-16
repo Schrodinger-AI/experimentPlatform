@@ -2,11 +2,9 @@ name: Docker build
 
 on:
   pull_request:
-    branches: ['main']
-    paths-ignore: ['worker/**']
+    branches: ["main"]
   push:
-    branches: ['main']
-    paths-ignore: ['worker/**']
+    branches: ["main"]
 
 jobs:
   docker:
