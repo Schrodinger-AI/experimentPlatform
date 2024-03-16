@@ -11,6 +11,7 @@ WORKDIR /app
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
 
 # Copy the rest of your application's code
 COPY . /app/
