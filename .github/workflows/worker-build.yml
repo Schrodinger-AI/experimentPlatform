@@ -1,12 +1,12 @@
-name: Docker build
+name: Worker build
 
 on:
   pull_request:
     branches: ['main']
-    paths-ignore: ['worker/**']
+    paths: ['worker/**']
   push:
     branches: ['main']
-    paths-ignore: ['worker/**']
+    paths: ['worker/**']
 
 jobs:
   docker:
@@ -29,13 +29,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/experiment-platform-backend
+          images: ${{ secrets.DOCKER_USERNAME }}/rq-docker
           tags: |
             type=raw,value=latest
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./worker
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
