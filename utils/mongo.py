@@ -1,4 +1,5 @@
 import pymongo
+import os
 
 class DataEntry:
     def __init__(self, description, submitter, create_date, status, imageResult, prompt, revised_prompt, traitsFile, configFile, createPromptFile, traits):
