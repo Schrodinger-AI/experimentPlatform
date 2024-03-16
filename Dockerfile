@@ -3,6 +3,8 @@ FROM python:alpine
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PATH=/usr/local/bin/python:$PATH
+ENV PYTHONPATH=/app/:$PYTHONPATH
 
 # Install nodejs
 RUN apk add --update nodejs
