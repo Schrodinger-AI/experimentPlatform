@@ -20,4 +20,4 @@ COPY . /app/
 EXPOSE 8000
 
 # Define the command to run your application using Gunicorn
-CMD ["gunicorn", "-b", "http://host.docker.internal:8000", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
