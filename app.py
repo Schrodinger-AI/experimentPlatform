@@ -11,12 +11,12 @@ from tasks import *
 
 # Create Flask application
 app = Flask(__name__)
-CORS(app, origins="https://faizal-aelf.github.io")
+CORS(app)
 # Create Redis connection and task queue
 redis_conn = redis.Redis()
 q = Queue(connection=redis_conn)
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://0.0.0.0:27017/')
 db = client['experimentPlatform']
 
 # Define route for starting a task
