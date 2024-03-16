@@ -13,7 +13,7 @@ from tasks import *
 app = Flask(__name__)
 CORS(app)
 # Create Redis connection and task queue
-redis_conn = redis.Redis()
+redis_conn = redis.Redis(host='0.0.0.0', port=6379)
 q = Queue(connection=redis_conn)
 
 client = MongoClient('mongodb://0.0.0.0:27017/')
