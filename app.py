@@ -11,7 +11,7 @@ import os
 from tasks import *
 
 mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017/")
-redis_host = os.environ.get("REDIS_URL", "localhost")
+redis_host = os.environ.get("REDIS_HOST", "localhost")
 redis_port = int(os.environ.get("REDIS_PORT", "6379"))
 
 # Create Flask application
