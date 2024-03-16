@@ -15,7 +15,8 @@ class DataEntry:
         self.traits = traits
 
 def get_db(db_name):
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017/")
+    client = pymongo.MongoClient(mongo_url)
     db = client[db_name]
     return db
 
