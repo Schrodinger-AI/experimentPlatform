@@ -1,8 +1,8 @@
 from .constants import DALLE_RESULT_FIELD_NAME, DREAM_SHAPER_MODEL_ID, LEONARDO_RESULT_FIELD_NAME
 from .resizer import reduce_size
+import os
 
-rate_limit_per_minute = 15
-delay = 60 / rate_limit_per_minute
+delay = int(os.environ.get("DELAY", "60"))
 
 def download_image(image_url):
     import requests
@@ -20,17 +20,18 @@ def convert_to_webp(image_bin):
 def run_dalle(prompt):
     import os
     import time
-    from openai import OpenAI
+    from openai import AzureOpenAI
     
-    time.sleep(delay)
     
-    client = OpenAI()
+    client = AzureOpenAI(
+    api_version="2024-02-01",
+    azure_endpoint="https://schrodinger-east-us.openai.azure.com/",
+    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+    )
     response = client.images.generate(
-      model="dall-e-3",
+      model="Dalle3",
       prompt=prompt,
-      size="1024x1024",
-      quality="standard",
-      n=1,
+      n=1
     )
 
     return response.dict()

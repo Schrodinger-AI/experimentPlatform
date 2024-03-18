@@ -2,7 +2,7 @@ import pymongo
 import os
 
 class DataEntry:
-    def __init__(self, description, submitter, create_date, status, imageResult, prompt, revised_prompt, traitsFile, configFile, createPromptFile, traits):
+    def __init__(self, description, submitter, create_date, status, imageResult, prompt, revised_prompt, traitsFile, configFile, createPromptFile, traits, generate_date):
         self.description = description
         self.submitter = submitter
         self.create_date = create_date
@@ -14,6 +14,7 @@ class DataEntry:
         self.configFile = configFile
         self.createPromptFile = createPromptFile
         self.traits = traits
+        self.generate_date = generate_date
 
 def get_db(db_name):
     mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017/")
