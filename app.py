@@ -14,6 +14,7 @@ from tasks import *
 mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017/")
 redis_host = os.environ.get("REDIS_HOST", "localhost")
 redis_port = int(os.environ.get("REDIS_PORT", "6379"))
+auth_token = os.environ.get("AUTH_TOKEN")
 
 # Create Flask application
 app = Flask(__name__)
@@ -184,6 +185,17 @@ def get_list_from_mongo():
                 results.append(experiment_info)
     
     return jsonify(results), 200
+
+@app.route('/experiments/auth', methods=['POST'])
+def auth():
+    token = request.json.get('token')
+    
+    # Convert ObjectId to string for JSON serialization
+    if token == auth_token:
+        return jsonify({"result": 1}), 200
+    else:
+        return jsonify({"result": 0}), 403
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=2323) 
