@@ -37,6 +37,24 @@ def start_task():
     experiment_id = request.json.get('experimentId')
     sampleNum = request.json.get('noOfSamples')
     submittedDate = int(time.time())
+    for i in range(int(sampleNum)):
+        # Create DataEntry object
+        dataEntry = DataEntry(
+            description=experiment_details,
+            submitter=submitter_name,
+            create_date=submittedDate,
+            status="Submitted",
+            prompt="",
+            traits="",
+            imageResult="",
+            revised_prompt="",
+            traitsFile=traits_file,
+            configFile=config_file,
+            createPromptFile=js_file,
+            generate_date=0
+        )
+        collection_name = f"experiment_{experiment_id}"
+        store_mongo(dataEntry, collection_name)
 
     # Print the request body
     app.logger.info('Received request body:')
