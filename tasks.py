@@ -31,7 +31,7 @@ class Sampler:
             for trait in self.base3:
                 values = self.traits[trait]
                 trait_args.append({'traitType': trait, 'value': random.sample(values, 1)[0]})
-            additional_count = random.randint(1,8)
+            additional_count = random.randint(5,8)
             if additional_count > len(self.non_base3):
                 additional_count = len(self.non_base3)
 
