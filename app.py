@@ -37,15 +37,28 @@ def start_task():
     experiment_id = request.json.get('experimentId')
     sampleNum = request.json.get('noOfSamples')
     submittedDate = int(time.time())
-    for i in range(int(sampleNum)):
+    samples = get_samples(json.loads(traits_file), sampleNum)
+    print(len(samples))
+
+    js_code = js_file
+
+    config = json.loads(config_file)
+
+    # Create an ExecJS context
+    ctx = execjs.compile(js_code)
+    prompts = []
+    for sample in samples:
+        prompt = ctx.call('createPrompt', config, sample)
+        prompts.append(prompt)
+    for i, prompt in enumerate(prompts):
         # Create DataEntry object
         dataEntry = DataEntry(
             description=experiment_details,
             submitter=submitter_name,
             create_date=submittedDate,
             status="Submitted",
-            prompt="",
-            traits="",
+            prompt=prompt,
+            traits=samples[i],
             imageResult="",
             revised_prompt="",
             traitsFile=traits_file,
@@ -67,7 +80,7 @@ def start_task():
     job_timeout_value = delay * int(sampleNum)
 
     # Enqueue the job
-    job = q.enqueue(generate_images, config_file, traits_file, js_file, sampleNum, submitter_name, experiment_details, experiment_id, submittedDate, job_timeout=job_timeout_value)
+    job = q.enqueue(generate_images, prompts, experiment_id, job_timeout=job_timeout_value)
 
     return jsonify({"job_id": job.get_id()}), 202
 
