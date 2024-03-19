@@ -194,7 +194,7 @@ def auth():
     if token == auth_token:
         return jsonify({"result": 1}), 200
     else:
-        return jsonify({"result": 0}), 403
+        return jsonify({"result": 0}), 200
 
 
 if __name__ == '__main__':
