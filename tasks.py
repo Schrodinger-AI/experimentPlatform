@@ -96,7 +96,7 @@ def execute_with_timeout(prompt):
         return base64image, revised_prompt
     except Exception as e:
         print(f"Error: {e}")
-        return "fail_to_generate", "fail_to_generate"
+        return str(e), str(e)
 
 def generate_images(prompts, experiment_id):
     # Your long-running task logic here
