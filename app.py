@@ -84,7 +84,7 @@ def start_task():
     job_timeout_value = delay * int(sampleNum)
 
     # Enqueue the job
-    job = q.enqueue(generate_images, minNumOfTraits, maxNumOfTraits, prompts, experiment_id, job_timeout=job_timeout_value)
+    job = q.enqueue(generate_images, prompts, experiment_id, job_timeout=job_timeout_value)
 
     return jsonify({"job_id": job.get_id()}), 202
 
