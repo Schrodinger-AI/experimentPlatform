@@ -24,14 +24,14 @@ class Sampler:
         #     for tt in nonbase3
         # }
 
-    def sample(self, n):
+    def sample(self, n, min, max):
         output = []
         for i in range(n):
             trait_args = []
             for trait in self.base3:
                 values = self.traits[trait]
                 trait_args.append({'traitType': trait, 'value': random.sample(values, 1)[0]})
-            additional_count = random.randint(5,8)
+            additional_count = random.randint(min, max)
             if additional_count > len(self.non_base3):
                 additional_count = len(self.non_base3)
 
@@ -54,9 +54,9 @@ def create_collection_if_not_exists(collection_name, db_name="experimentPlatform
     # This creates an index on the 'prompt' field
     coll.create_index([('prompt', 1)])  # 1 for ascending order
 
-def get_samples(traits_file, sampleNum):
+def get_samples(traits_file, sampleNum, minNumOfTraits, maxNumOfTraits):
     sampler = Sampler(traits_file)
-    samples = sampler.sample(sampleNum)
+    samples = sampler.sample(sampleNum, minNumOfTraits, maxNumOfTraits)
     return samples
 
 def store_mongo(dataEntry, collection_name):

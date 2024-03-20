@@ -37,8 +37,12 @@ def start_task():
     experiment_details = request.json.get('experimentDetails')
     experiment_id = request.json.get('experimentId')
     sampleNum = request.json.get('noOfSamples')
+    minNumOfTraits = request.json.get('minNumOfTraits')
+    maxNumOfTraits = request.json.get('maxNumOfTraits')
+    if minNumOfTraits > maxNumOfTraits:
+        return jsonify({"error": "minNumOfTraits is larger than maxNumOfTraits"}), 400
     submittedDate = int(time.time())
-    samples = get_samples(json.loads(traits_file), sampleNum)
+    samples = get_samples(json.loads(traits_file), sampleNum, minNumOfTraits, maxNumOfTraits)
     print(len(samples))
 
     js_code = js_file
@@ -81,7 +85,7 @@ def start_task():
     job_timeout_value = delay * int(sampleNum)
 
     # Enqueue the job
-    job = q.enqueue(generate_images, prompts, experiment_id, job_timeout=job_timeout_value)
+    job = q.enqueue(generate_images, minNumOfTraits, maxNumOfTraits, prompts, experiment_id, job_timeout=job_timeout_value)
 
     return jsonify({"job_id": job.get_id()}), 202
 
