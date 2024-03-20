@@ -10,7 +10,7 @@ import time
 
 
 class Sampler:
-    baseList = ['background', 'breed', 'clothes']
+    baseList = ['Background', 'Breed', 'Clothes']
     def __init__(self, traits):
         self.traits = traits
         self.base3 = [key for key in self.traits if key in self.baseList]
