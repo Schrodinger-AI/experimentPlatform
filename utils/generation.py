@@ -44,7 +44,6 @@ def run_one_sample(coll, sample_item):
         return
     dalle_result = run_dalle(sample_item['prompt'])
     url = dalle_result['data'][0]['url']
-    print(url)
     image_bin = download_image(url)
     image_256 = reduce_size(image_bin, 4)
     result = {

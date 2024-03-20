@@ -37,13 +37,12 @@ def start_task():
     experiment_details = request.json.get('experimentDetails')
     experiment_id = request.json.get('experimentId')
     sampleNum = request.json.get('noOfSamples')
-    minNumOfTraits = request.json.get('minNumOfTraits')
-    maxNumOfTraits = request.json.get('maxNumOfTraits')
+    minNumOfTraits = request.json.get('minNumOfTraits', 5)
+    maxNumOfTraits = request.json.get('maxNumOfTraits', 8)
     if minNumOfTraits > maxNumOfTraits:
         return jsonify({"error": "minNumOfTraits is larger than maxNumOfTraits"}), 400
     submittedDate = int(time.time())
     samples = get_samples(json.loads(traits_file), sampleNum, minNumOfTraits, maxNumOfTraits)
-    print(len(samples))
 
     js_code = js_file
 

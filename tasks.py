@@ -104,7 +104,6 @@ def generate_images(prompts, experiment_id):
     base64images = []
     # Second loop to update DataEntry objects with image results
     timeout = delay * 100
-    print(timeout)
     for i, prompt in enumerate(prompts):
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(execute_with_timeout, prompt)

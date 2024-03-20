@@ -28,12 +28,9 @@ def get_collection(db, collection_name):
 
 def insert(collection, data):
     res = collection.insert_one(data)
-    print(res)
     _id = res.inserted_id
-    print(_id)
 
 def query(collection):
     res = []
     for x in collection.find({}, {"submitter": "xibo"}):
         res.append(x)
-    print(res)
